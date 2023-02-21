@@ -1,18 +1,16 @@
 ﻿using Microsoft.ML;
 using Microsoft.ML.Data;
-using System;
 
-namespace KittenClassifier
+namespace MultiOutputModelTraining
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // https://stackoverflow.com/questions/67411717/multilabel-classification-in-ml-net
             var mlContext = new MLContext();
 
             // Load data
-            var dataView = mlContext.Data.LoadFromTextFile<InputData>("data.csv", separatorChar: ',', hasHeader: true);
+            IDataView dataView = mlContext.Data.LoadFromTextFile<InputData>("data.csv", separatorChar: ',', hasHeader: true);
 
             // Split data into training and testing sets
             var dataSplit = mlContext.Data.TrainTestSplit(dataView, testFraction: 0.2);
@@ -23,16 +21,17 @@ namespace KittenClassifier
             var dataPipeline = mlContext.Transforms.Conversion.MapValueToKey("LabelOrange", "IsOrange")
                                                  .Append(mlContext.Transforms.Conversion.MapValueToKey("LabelGrey", "IsGrey"))
                                                  .Append(mlContext.Transforms.Conversion.MapValueToKey("LabelMale", "IsMale"))
-                                                 .Append(mlContext.Transforms.Concatenate("Features", "Code"))
+                                                 .Append(mlContext.Transforms.Categorical.OneHotEncoding("CodeEncoded", "Code"))
+                                                 .Append(mlContext.Transforms.Concatenate("Features", "CodeEncoded"))
                                                  .Append(mlContext.Transforms.Conversion.ConvertType("FeaturesFloat", "Features"));
 
             // Define training pipeline
-            var trainingPipeline = dataPipeline.Append(mlContext.Transforms.Concatenate("Labels", "LabelOrange", "LabelGrey", "LabelMale"))
+            var trainingPipeline = dataPipeline.Append(mlContext.Transforms.Concatenate("NonKeyOutput", "LabelOrange", "LabelGrey", "LabelMale"))
                                                .Append(mlContext.Transforms.Conversion.MapKeyToValue("Orange", "Orange"))
                                                .Append(mlContext.Transforms.Conversion.MapKeyToValue("Grey", "Grey"))
                                                .Append(mlContext.Transforms.Conversion.MapKeyToValue("Male", "Male"))
-                                               .Append(mlContext.Transforms.Concatenate("Output", "Orange", "Grey", "Male"))
-                                               .Append(mlContext.Transforms.CopyColumns("Label", "Output"))
+                                               .Append(mlContext.Transforms.Concatenate("KeyOutput", "Orange", "Grey", "Male"))
+                                               .Append(mlContext.Transforms.CopyColumns("Label", "KeyOutput"))
                                                .Append(mlContext.Transforms.NormalizeMinMax("FeaturesFloat", "FeaturesFloat"))
                                                .Append(mlContext.BinaryClassification.Trainers.SdcaNonCalibrated("Model", maximumNumberOfIterations: 100));
 
