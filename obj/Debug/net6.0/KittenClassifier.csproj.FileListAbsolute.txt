@@ -33,3 +33,12 @@ C:\Users\fiach\source\repos\KittenClassifier\obj\Debug\net6.0\refint\KittenClass
 C:\Users\fiach\source\repos\KittenClassifier\obj\Debug\net6.0\KittenClassifier.pdb
 C:\Users\fiach\source\repos\KittenClassifier\obj\Debug\net6.0\KittenClassifier.genruntimeconfig.cache
 C:\Users\fiach\source\repos\KittenClassifier\obj\Debug\net6.0\ref\KittenClassifier.dll
+C:\Users\fiach\source\repos\KittenClassifier\bin\Debug\net6.0\kittens.csv
+C:\Users\fiach\source\repos\KittenClassifier\bin\Debug\net6.0\Accord.dll.config
+C:\Users\fiach\source\repos\KittenClassifier\bin\Debug\net6.0\Accord.dll
+C:\Users\fiach\source\repos\KittenClassifier\bin\Debug\net6.0\Accord.IO.dll
+C:\Users\fiach\source\repos\KittenClassifier\bin\Debug\net6.0\Accord.MachineLearning.dll
+C:\Users\fiach\source\repos\KittenClassifier\bin\Debug\net6.0\Accord.Math.Core.dll
+C:\Users\fiach\source\repos\KittenClassifier\bin\Debug\net6.0\Accord.Math.dll
+C:\Users\fiach\source\repos\KittenClassifier\bin\Debug\net6.0\Accord.Statistics.dll
+C:\Users\fiach\source\repos\KittenClassifier\bin\Debug\net6.0\ICSharpCode.SharpZipLib.dll
